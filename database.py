@@ -47,10 +47,20 @@ class Database():
         self.connection.execute(query)
         self.connection.commit() 
  
-    def edit_patients(self, name, id):
-        query = sqla.text("UPDATE patients SET name = :name WHERE id = :id")
-        query = query.bindparams(sqla.bindparam("name", name))
-        query = query.bindparams(sqla.bindparam("id", id))
+    def edit_patients(self, id, submitted):
+        query = sqla.text("UPDATE patients SET  phone_number=:phone_number,otchestvo=:otchestvo,firstname=:firstname,day_births=:day_births,date_of_receipt=:date_of_receipt,address=:address,time_of_receipt=:time_of_receipt, WHERE id = :id")
+        query = query.bindparams(
+            sqla.bindparam("name", submitted["Имя"]),
+            sqla.bindparam("firstname", submitted["Фамилия"]),
+            sqla.bindparam("otchestvo",  submitted["Отчество"]),
+            sqla.bindparam("day_births",  submitted["День рождения"]),
+            sqla.bindparam("gender",  submitted["Пол"]),
+            sqla.bindparam("address",  submitted["Адрес"]),
+            sqla.bindparam("phone_number",  submitted["Номер телефона"]),
+            sqla.bindparam("date_of_receipt",  submitted["Дата поступления"]),
+            sqla.bindparam("time_of_receipt",  submitted["Время поступления"]),
+            sqla.bindparam(int(id),  submitted["id"])
+        )
         self.connection.execute(query)
         self.connection.commit()
 

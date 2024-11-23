@@ -22,7 +22,7 @@ class FormWindow(QDialog):
         self.layout.addWidget(self.create_name_input_widget("Отчество", otchestvo))
         self.layout.addWidget(self.create_name_input_widget("День рождения", day_births))
         self.layout.addWidget(self.create_name_input_widget("Пол", gender))
-        self.layout.addWidget(self.create_name_input_widget("Адресс", address))
+        self.layout.addWidget(self.create_name_input_widget("Адрес", address))
         self.layout.addWidget(self.create_name_input_widget("Номер телефона", phone_number))
         self.layout.addWidget(self.create_name_input_widget("Дата поступления", date_of_receipt))
         self.layout.addWidget(self.create_name_input_widget("Время поступления", time_of_receipt))
@@ -62,7 +62,8 @@ class FormWindow(QDialog):
                 if line_edit:
                     label = widget.layout().itemAt(0).widget().text() 
                     submitted[label] = line_edit.text()
-        self.submitted_data.emit(submitted)
+        db=Database()
+        db.edit_patients(id, submitted)
         self.close()
  
     def close(self):
